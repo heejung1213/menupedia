@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메뉴피디아(Menupedia) - AI 해외 메뉴판 해설</title>
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        h1 { color: #1e3a8a; font-size: 24px; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-top: 0; }
+        .select-box { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; margin-bottom: 15px; }
+        button { width: 100%; background-color: #2563eb; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #1d4ed8; }
+        .result-box { display: none; margin-top: 25px; border-top: 2px dashed #e2e8f0; padding-top: 20px; }
+        .card { background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #2563eb; }
+        .card h3 { margin: 0 0 6px 0; font-size: 15px; color: #475569; }
+        .card p { margin: 0; font-size: 15px; font-weight: 500; }
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 13px; font-weight: bold; margin-right: 5px; }
+        .badge-warn { background-color: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .badge-ok { background-color: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ 메뉴피디아 (Menupedia)</h1>
+        <p style="color: #64748b; font-size: 14px;">해외 로컬 메뉴판 텍스트를 AI 3대 속성으로 해설합니다.</p>
+        
+        <label for="menuSelect"><b>[샘플 테스트] 메뉴판 항목 선택:</b></label><br><br>
+        <select id="menuSelect" class="select-box">
+            <option value="banhmi">베트남 - Banh Mi Thit (반미 띱)</option>
+            <option value="tomyum">태국 - Tom Yum Goong (똠얌꿍)</option>
+            <option value="escargot">프랑스 - Escargots de Bourgogne (에스카르고)</option>
+        </select>
+        
+        <button onclick="runAI()">AI 메뉴 분석 및 해설 카드 생성</button>
+
+        <div id="result" class="result-box">
+            <h2 style="font-size: 18px; color: #0f172a; margin-top: 0;">🔍 AI 해설 결과</h2>
+            
+            <div class="card">
+                <h3>📌 1. 문화적 맥락 맛 해설 (Contextual Analogy)</h3>
+                <p id="analogy"></p>
+            </div>
+            
+            <div class="card">
+                <h3>🌶️ 2. 매운맛 정량 지수 (Spiciness Level)</h3>
+                <p id="spiciness"></p>
+            </div>
+            
+            <div class="card">
+                <h3>⚠️ 3. 주의 식재료 및 향신료 알림 (Allergy & Spice Alert)</h3>
+                <p id="alert"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function runAI() {
+            const val = document.getElementById('menuSelect').value;
+            const res = document.getElementById('result');
+            
+            if(val === 'banhmi') {
+                document.getElementById('analogy').innerText = "겉은 바삭하고 속은 촉촉한 바게트 빵에 돼지고기를 넣은 베트남식 샌드위치 (한국 불고기 샌드위치와 비슷함)";
+                document.getElementById('spiciness').innerHTML = "[🌶️░░] 0.5 / 3.0 단계 (순한맛 - 아이도 먹기 편함)";
+                document.getElementById('alert').innerHTML = "<span class='badge badge-warn'>🌿 고수(Cilantro) 포함</span> <span class='badge badge-warn'>🥜 땅콩 함유</span> (주문 시 빼달라고 요청 가능)";
+            } else if(val === 'tomyum') {
+                document.getElementById('analogy').innerText = "새우를 넣고 시큼·매콤하게 끓여낸 태국 대표 국물 요리 (한국 매운탕/김치찌개와 유사)";
+                document.getElementById('spiciness').innerHTML = "[🌶️🌶️░] 2.0 / 3.0 단계 (신라면 수준의 매운맛)";
+                document.getElementById('alert').innerHTML = "<span class='badge badge-warn'>🌿 고수 포함</span> <span class='badge badge-warn'>🦐 새우 알레르기 주의</span>";
+            } else if(val === 'escargot') {
+                document.getElementById('analogy').innerText = "버터와 파슬리 소스를 얹어 구워낸 달팽이 요리 (한국의 바질 버터 골뱅이 구이와 비슷한 식감)";
+                document.getElementById('spiciness').innerHTML = "[░░░] 0.0 / 3.0 단계 (매운맛 없음)";
+                document.getElementById('alert').innerHTML = "<span class='badge badge-ok'>✅ 향신료 없음</span> <span class='badge badge-warn'>🐚 패류/조개류 알레르기 주의</span>";
+            }
+            res.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
